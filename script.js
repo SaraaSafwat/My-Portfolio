@@ -105,4 +105,60 @@ function setupToggles() {
   });
 }
 
-setupToggles(); 
+setupToggles();
+
+// Typewriter titles
+(function typewriterInit() {
+  const el = document.getElementById('typing');
+  if (!el) return;
+  const titles = [
+    'Quality Assurance Specialist',
+    'Business Information Systems Graduate',
+    'Accounting & Treasury Experience',
+    'Data Analysis — Excel, Power BI, Python'
+  ];
+  let titleIndex = 0;
+  let charIndex = 0;
+  let deleting = false;
+  const typeDelay = 60; // typing speed
+  const pauseDelay = 1000; // pause at end
+
+  function tick() {
+    const current = titles[titleIndex];
+    if (!deleting) {
+      charIndex++;
+      el.textContent = current.slice(0, charIndex);
+      if (charIndex === current.length) {
+        deleting = true;
+        setTimeout(tick, pauseDelay);
+        return;
+      }
+    } else {
+      charIndex--;
+      el.textContent = current.slice(0, Math.max(0, charIndex));
+      if (charIndex === 0) {
+        deleting = false;
+        titleIndex = (titleIndex + 1) % titles.length;
+      }
+    }
+    setTimeout(tick, deleting ? 35 : typeDelay);
+  }
+
+  // Start typing once hero is visible
+  const hero = document.querySelector('.hero.section');
+  if (hero && hero.classList.contains('is-visible')) {
+    tick();
+  } else if (hero) {
+    const once = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          tick();
+          once.disconnect();
+        }
+      });
+    }, { threshold: 0.4 });
+    once.observe(hero);
+  } else {
+    tick();
+  }
+})(); 

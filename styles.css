@@ -25,6 +25,7 @@ body {
   background: radial-gradient(1200px 800px at 80% -10%, rgba(135,112,255,0.15), rgba(0,0,0,0)) no-repeat,
               linear-gradient(180deg, var(--bg), var(--bg-2));
   line-height: 1.65;
+  padding-top: 64px;
 }
 
 img, svg, video {
@@ -51,12 +52,13 @@ img, svg, video {
 
 /***** Header *****/
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 50;
   backdrop-filter: saturate(140%) blur(10px);
   background: rgba(11, 15, 23, 0.6);
   border-bottom: 1px solid var(--border);
+  width: 100%;
 }
 
 .nav {
@@ -366,6 +368,12 @@ img, svg, video {
 /* Animated number easing style (visual only; JS drives the value) */
 .stat .num { will-change: contents; }
 
+/* Typewriter */
+.typewriter { display: inline-flex; align-items: baseline; gap: 6px; min-height: 28px; }
+.typewriter #typing { white-space: nowrap; }
+.cursor { color: var(--primary); animation: blink 1s step-end infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
 /***** Responsive *****/
 @media (max-width: 1000px) {
   .hero-grid { grid-template-columns: 1fr; }
@@ -380,4 +388,24 @@ img, svg, video {
   .nav-toggle { display: inline-block; }
   .cards.three-col { grid-template-columns: 1fr; }
   .kv li { grid-template-columns: 120px 1fr; }
+} 
+
+.hero-avatar { display: grid; place-items: center; min-height: 420px; }
+.avatar-circle {
+  width: min(420px, 70vw);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: radial-gradient(160px 160px at 60% 30%, rgba(124, 219, 255, 0.25), rgba(255,255,255,0.04)),
+              rgba(255,255,255,0.04);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.avatar-circle:after {
+  content: "+ Add Photo";
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  color: var(--muted);
+  font-weight: 600;
 } 
